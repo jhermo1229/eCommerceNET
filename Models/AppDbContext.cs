@@ -8,13 +8,11 @@ namespace ECommerceNet.Models
     {
         public AppDbContext(DbContextOptions<AppDbContext> opts) : base(opts) { }
 
-        public DbSet<DataItem> DataItems { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<PurchaseHistory> PurchaseHistory { get; set; }
+        public DbSet<Products> Products { get; set; }
+        public DbSet<Comments> Comments { get; set; }
 
-        public DbSet<User> UserItems { get; set; }
-        public DbSet<PurchaseHistory> PurchaseHistoryItems { get; set; }
-        public DbSet<Products> ProductsItems { get; set; }
-        public DbSet<Comments> CommentsItems { get; set; }
-
-        public DbSet<Cart> CartItems { get; set; }
+        public DbSet<Cart> Cart { get; set; }
     }
 }

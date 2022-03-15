@@ -39,7 +39,7 @@ namespace ECommerceNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("Cart");
                 });
 
             modelBuilder.Entity("ECommerceNet.Models.Comments", b =>
@@ -63,25 +63,7 @@ namespace ECommerceNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CommentsItems");
-                });
-
-            modelBuilder.Entity("ECommerceNet.Models.DataItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Data1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Data2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DataItems");
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("ECommerceNet.Models.Products", b =>
@@ -105,7 +87,7 @@ namespace ECommerceNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductsItems");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("ECommerceNet.Models.PurchaseHistory", b =>
@@ -126,7 +108,7 @@ namespace ECommerceNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PurchaseHistoryItems");
+                    b.ToTable("PurchaseHistory");
                 });
 
             modelBuilder.Entity("ECommerceNet.Models.User", b =>
@@ -139,8 +121,8 @@ namespace ECommerceNet.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Email")
-                        .HasColumnType("int");
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -162,7 +144,7 @@ namespace ECommerceNet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserItems");
+                    b.ToTable("User");
                 });
 #pragma warning restore 612, 618
         }
