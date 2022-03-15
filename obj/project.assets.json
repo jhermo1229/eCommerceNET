@@ -5823,11 +5823,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\herje\\Desktop\\Prog8185\\eCommerceNET\\ECommerceNet\\ECommerceNet.csproj",
+      "projectUniqueName": "C:\\Users\\herje\\Desktop\\Prog8185\\eCommerceNET\\ECommerceNet.csproj",
       "projectName": "ECommerceNet",
-      "projectPath": "C:\\Users\\herje\\Desktop\\Prog8185\\eCommerceNET\\ECommerceNet\\ECommerceNet.csproj",
+      "projectPath": "C:\\Users\\herje\\Desktop\\Prog8185\\eCommerceNET\\ECommerceNet.csproj",
       "packagesPath": "C:\\Users\\herje\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\herje\\Desktop\\Prog8185\\eCommerceNET\\ECommerceNet\\obj\\",
+      "outputPath": "C:\\Users\\herje\\Desktop\\Prog8185\\eCommerceNET\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"

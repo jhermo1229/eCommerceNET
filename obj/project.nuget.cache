@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "k7nQQOmau8j5/MJhI9rXONSZkq9ZrhOUkU5NGGUDjLij3clXbAYVAMnC4OIOk2bQgIf/jGnWSR6sOiMa4VQ4Og==",
+  "dgSpecHash": "31yVqHmOKGpl5BAKRLn6GiQ+pfudzDkykLVGNvAhBAtzMURSSceWz3CiwiWkF2lTFROszNFfP7EvCHg/gtcd+Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\herje\\Desktop\\Prog8185\\eCommerceNET\\ECommerceNet\\ECommerceNet.csproj",
+  "projectFilePath": "C:\\Users\\herje\\Desktop\\Prog8185\\eCommerceNET\\ECommerceNet.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\herje\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\herje\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
