@@ -1,12 +1,12 @@
 ﻿namespace ECommerceNet.Models
 {
-    public class Cart
+    public class Comments
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
         public int UserId { get; set; }
-        public int Quantity { get; set; }
-        public float TotalCost { get; set; }
+        public string Comment { get; set; }
+        public int Rating { get; set; }
 
     }
 }
