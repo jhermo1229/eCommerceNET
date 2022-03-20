@@ -31,8 +31,8 @@ namespace ECommerceNet.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<float>("TotalCost")
-                        .HasColumnType("real");
+                    b.Property<double>("TotalCost")
+                        .HasColumnType("float");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -73,8 +73,8 @@ namespace ECommerceNet.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float>("Cost")
-                        .HasColumnType("real");
+                    b.Property<double>("Cost")
+                        .HasColumnType("float");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");

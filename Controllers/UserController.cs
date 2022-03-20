@@ -26,11 +26,9 @@ namespace ECommerceNet.Controllers
         [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
-            //await initDatas();
 
             try
             {
-                //return datas;
                 return await context.User.ToListAsync();
             }
             catch
@@ -43,7 +41,6 @@ namespace ECommerceNet.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
         {
-            //await initDatas();
 
             try
             {
@@ -64,14 +61,10 @@ namespace ECommerceNet.Controllers
 
             try
             {
-                if (!string.IsNullOrEmpty(user.FirstName) && !string.IsNullOrEmpty(user.LastName))
+                if (!IsFieldEmpty(user))
                 {
-                    //di.Id = await context.DataItems.MaxAsync(d => d.Id) + 1;
-                    // ReSharper disable once MethodHasAsyncOverload
                     context.User.Add(user);
                     await context.SaveChangesAsync();
-                    //await updateDatas();
-
                     return user;
                 }
 
@@ -87,8 +80,6 @@ namespace ECommerceNet.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<User>> Put(int id, [FromBody] User user)
         {
-            //await initDatas();
-
             try
             {
                 var item = await context.User.FirstOrDefaultAsync(d => d.Id == id);
@@ -96,12 +87,17 @@ namespace ECommerceNet.Controllers
                 if (item == null)
                     return NotFound();
 
-                if (!string.IsNullOrEmpty(user.FirstName) && !string.IsNullOrEmpty(user.LastName))
+                if (!IsFieldEmpty(user))
                 {
                     item.FirstName = user.FirstName;
                     item.LastName = user.LastName;
+                    item.Email = user.Email;
+                    item.Address = user.Address;
+                    item.ShippingAddress = user.ShippingAddress;
+                    item.MobileNumber = user.MobileNumber;
+                    item.Username = user.Username;
+                    item.Password = user.Password;
                     await context.SaveChangesAsync();
-                    //await updateDatas();
                     return item;
                 }
 
@@ -123,7 +119,6 @@ namespace ECommerceNet.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<DeleteResponse>> Delete(int id)
         {
-            //await initDatas();
 
             try
             {
@@ -133,7 +128,6 @@ namespace ECommerceNet.Controllers
                 {
                     context.User.Remove(item);
                     await context.SaveChangesAsync();
-                    //await updateDatas();
                     return new DeleteResponse { Id = item.Id, Success = true };
                 }
 
@@ -143,6 +137,19 @@ namespace ECommerceNet.Controllers
             {
                 return StatusCode(500);
             }
+        }
+
+        private bool IsFieldEmpty(User user)
+        {
+            bool isEmptyOrNull = false;
+            if(string.IsNullOrEmpty(user.FirstName) || string.IsNullOrEmpty(user.LastName) || string.IsNullOrEmpty(user.Email)
+                || string.IsNullOrEmpty(user.Address) || string.IsNullOrEmpty(user.ShippingAddress) || string.IsNullOrEmpty(user.MobileNumber)
+                || string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Password))
+            {
+                isEmptyOrNull = true;
+            }
+
+            return isEmptyOrNull;
         }
     }
 }

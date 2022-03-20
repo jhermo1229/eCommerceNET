@@ -26,11 +26,9 @@ namespace ECommerceNet.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Products>>> Get()
         {
-            //await initDatas();
 
             try
             {
-                //return datas;
                 return await context.Products.ToListAsync();
             }
             catch
@@ -43,7 +41,6 @@ namespace ECommerceNet.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Products>> Get(int id)
         {
-            //await initDatas();
 
             try
             {
@@ -60,17 +57,13 @@ namespace ECommerceNet.Controllers
         [HttpPost]
         public async Task<ActionResult<Products>> Post([FromBody] Products products)
         {
-            // initDatas();
 
             try
             {
-                if (!string.IsNullOrEmpty(products.ProductName) && !string.IsNullOrEmpty(products.Description))
+                if (!IsFieldEmpty(products))
                 {
-                    //di.Id = await context.DataItems.MaxAsync(d => d.Id) + 1;
-                    // ReSharper disable once MethodHasAsyncOverload
                     context.Products.Add(products);
                     await context.SaveChangesAsync();
-                    //await updateDatas();
 
                     return products;
                 }
@@ -87,7 +80,6 @@ namespace ECommerceNet.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Products>> Put(int id, [FromBody] Products products)
         {
-            //await initDatas();
 
             try
             {
@@ -96,12 +88,13 @@ namespace ECommerceNet.Controllers
                 if (item == null)
                     return NotFound();
 
-                if (!string.IsNullOrEmpty(products.ProductName) && !string.IsNullOrEmpty(products.Description))
+                if (!IsFieldEmpty(products))
                 {
                     item.ProductName = products.ProductName;
                     item.Description = products.Description;
+                    item.Cost = products.Cost;
+                    item.ImageUrl = products.ImageUrl;
                     await context.SaveChangesAsync();
-                    //await updateDatas();
                     return item;
                 }
 
@@ -123,7 +116,6 @@ namespace ECommerceNet.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<DeleteResponse>> Delete(int id)
         {
-            //await initDatas();
 
             try
             {
@@ -133,7 +125,6 @@ namespace ECommerceNet.Controllers
                 {
                     context.Products.Remove(item);
                     await context.SaveChangesAsync();
-                    //await updateDatas();
                     return new DeleteResponse { Id = item.Id, Success = true };
                 }
 
@@ -143,6 +134,18 @@ namespace ECommerceNet.Controllers
             {
                 return StatusCode(500);
             }
+        }
+
+
+        private bool IsFieldEmpty(Products product)
+        {
+            bool isEmptyOrNull = false;
+            if (string.IsNullOrEmpty(product.ProductName) || string.IsNullOrEmpty(product.Description) || string.IsNullOrEmpty(product.ImageUrl))
+            {
+                isEmptyOrNull = true;
+            }
+
+            return isEmptyOrNull;
         }
     }
 }

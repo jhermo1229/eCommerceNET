@@ -26,11 +26,8 @@ namespace ECommerceNet.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Comments>>> Get()
         {
-            //await initDatas();
-
             try
             {
-                //return datas;
                 return await context.Comments.ToListAsync();
             }
             catch
@@ -43,8 +40,6 @@ namespace ECommerceNet.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Comments>> Get(int id)
         {
-            //await initDatas();
-
             try
             {
                 var item = await context.Comments.FirstOrDefaultAsync(d => d.Id == id);
@@ -60,18 +55,12 @@ namespace ECommerceNet.Controllers
         [HttpPost]
         public async Task<ActionResult<Comments>> Post([FromBody] Comments comments)
         {
-            // initDatas();
-
             try
             {
-                if (!string.IsNullOrEmpty(comments.Comment))
+                if (!IsProdOrUserAvailable(comments))
                 {
-                    //di.Id = await context.DataItems.MaxAsync(d => d.Id) + 1;
-                    // ReSharper disable once MethodHasAsyncOverload
                     context.Comments.Add(comments);
                     await context.SaveChangesAsync();
-                    //await updateDatas();
-
                     return comments;
                 }
 
@@ -87,8 +76,6 @@ namespace ECommerceNet.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Comments>> Put(int id, [FromBody] Comments comments)
         {
-            //await initDatas();
-
             try
             {
                 var item = await context.Comments.FirstOrDefaultAsync(d => d.Id == id);
@@ -96,11 +83,13 @@ namespace ECommerceNet.Controllers
                 if (item == null)
                     return NotFound();
 
-                if (!string.IsNullOrEmpty(comments.Comment))
+                if (!IsProdOrUserAvailable(comments))
                 {
                     item.Comment = comments.Comment;
+                    item.Rating = comments.Rating;
+                    item.ProductId = comments.ProductId;
+                    item.UserId = comments.UserId;
                     await context.SaveChangesAsync();
-                    //await updateDatas();
                     return item;
                 }
 
@@ -122,8 +111,6 @@ namespace ECommerceNet.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<DeleteResponse>> Delete(int id)
         {
-            //await initDatas();
-
             try
             {
                 var item = await context.Comments.FirstOrDefaultAsync(d => d.Id == id);
@@ -132,7 +119,6 @@ namespace ECommerceNet.Controllers
                 {
                     context.Comments.Remove(item);
                     await context.SaveChangesAsync();
-                    //await updateDatas();
                     return new DeleteResponse { Id = item.Id, Success = true };
                 }
 
@@ -142,6 +128,17 @@ namespace ECommerceNet.Controllers
             {
                 return StatusCode(500);
             }
+        }
+
+        private bool IsProdOrUserAvailable(Comments comment)
+        {
+            bool isProductOrUserAvail = false;
+            if (comment.ProductId == 0 || comment.UserId == 0 || comment.Rating == 0)
+            {
+                isProductOrUserAvail = true;
+            }
+
+            return isProductOrUserAvail;
         }
     }
 }

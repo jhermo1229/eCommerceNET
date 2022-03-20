@@ -1,4 +1,6 @@
-﻿namespace ECommerceNet.Models
+﻿using System;
+
+namespace ECommerceNet.Models
 {
     public class Cart
     {
@@ -6,7 +8,7 @@
         public int ProductId { get; set; }
         public int UserId { get; set; }
         public int Quantity { get; set; }
-        public float TotalCost { get; set; }
+        public Double TotalCost { get; set; }
 
     }
 }

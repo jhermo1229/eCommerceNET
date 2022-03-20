@@ -26,11 +26,9 @@ namespace ECommerceNet.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Cart>>> Get()
         {
-            //await initDatas();
 
             try
             {
-                //return datas;
                 return await context.Cart.ToListAsync();
             }
             catch
@@ -43,8 +41,6 @@ namespace ECommerceNet.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Cart>> Get(int id)
         {
-            //await initDatas();
-
             try
             {
                 var item = await context.Cart.FirstOrDefaultAsync(d => d.Id == id);
@@ -60,20 +56,15 @@ namespace ECommerceNet.Controllers
         [HttpPost]
         public async Task<ActionResult<Cart>> Post([FromBody] Cart carts)
         {
-            // initDatas();
-
             try
             {
-                //if (!string.IsNullOrEmpty(carts.ProductName) && !string.IsNullOrEmpty(carts.Description))
-                //{
-                    //di.Id = await context.DataItems.MaxAsync(d => d.Id) + 1;
-                    // ReSharper disable once MethodHasAsyncOverload
+                if (!IsProdOrUserAvailable(carts))
+                {
                     context.Cart.Add(carts);
                     await context.SaveChangesAsync();
-                    //await updateDatas();
 
                     return carts;
-                //}
+                }
 
                 return BadRequest();
             }
@@ -87,8 +78,6 @@ namespace ECommerceNet.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Cart>> Put(int id, [FromBody] Cart cart)
         {
-            //await initDatas();
-
             try
             {
                 var item = await context.Cart.FirstOrDefaultAsync(d => d.Id == id);
@@ -96,14 +85,15 @@ namespace ECommerceNet.Controllers
                 if (item == null)
                     return NotFound();
 
-                //if (!string.IsNullOrEmpty(cart.ProductId) && !int.IsNullOrEmpty(cart.UserId))
-                //{
-                //    item.ProductName = cart.ProductName;
-                //    item.Description = cart.Description;
-                //    await context.SaveChangesAsync();
-                //    //await updateDatas();
-                //    return item;
-                //}
+                if (!IsProdOrUserAvailable(cart))
+                {
+                    item.ProductId = cart.ProductId;
+                    item.UserId = cart.UserId;
+                    item.Quantity = cart.Quantity;
+                    item.TotalCost = cart.TotalCost;
+                    await context.SaveChangesAsync();
+                    return item;
+                }
 
                 return BadRequest();
             }
@@ -123,8 +113,6 @@ namespace ECommerceNet.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<DeleteResponse>> Delete(int id)
         {
-            //await initDatas();
-
             try
             {
                 var item = await context.Cart.FirstOrDefaultAsync(d => d.Id == id);
@@ -133,7 +121,6 @@ namespace ECommerceNet.Controllers
                 {
                     context.Cart.Remove(item);
                     await context.SaveChangesAsync();
-                    //await updateDatas();
                     return new DeleteResponse { Id = item.Id, Success = true };
                 }
 
@@ -143,6 +130,17 @@ namespace ECommerceNet.Controllers
             {
                 return StatusCode(500);
             }
+        }
+
+        private bool IsProdOrUserAvailable(Cart cart)
+        {
+            bool isProductOrUserAvail = false;
+            if (cart.ProductId == 0 || cart.UserId == 0)
+            {
+                isProductOrUserAvail = true;
+            }
+
+            return isProductOrUserAvail;
         }
     }
 }
